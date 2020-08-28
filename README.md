@@ -4,7 +4,7 @@ Playing with [Open Policy Agent](https://www.openpolicyagent.org) Policies for K
 
 ## Installation
 
-Please refer to [Running OPA](https://www.openpolicyagent.org/docs/latest/#running-opa)
+Please refer to [Running OPA](https://www.openpolicyagent.org/docs/latest/#running-opa).
 
 ## Testing
 

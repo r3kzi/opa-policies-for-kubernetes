@@ -1,7 +1,7 @@
 package kubernetes.validating.image
 
 test_deny {
-	deny["image 'alpine' comes from untrusted registry"] with input as pod
+	violation[{"msg": "image 'alpine' comes from untrusted registry"}] with input as pod
 }
 
 pod := {

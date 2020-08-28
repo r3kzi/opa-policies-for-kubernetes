@@ -1,0 +1,33 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: validimageregistry
+spec:
+  crd:
+    spec:
+      names:
+        kind: ValidImageRegistry
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package kubernetes.validating.image
+
+        violation[{"msg": msg}] {
+          # Check image
+          image := input.review.object.spec.containers[_].image
+          not startswith(image, "gcr.io/")
+
+          # If all above statements are true, return message
+          msg := sprintf("image '%v' comes from untrusted registry", [image])
+        }
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: ValidImageRegistry
+metadata:
+  name: pods-must-use-valid-image-registry
+spec:
+  match:
+    excludedNamespaces: [ "kube-system", "gatekeeper-system", "monitoring", "logging" ]
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]

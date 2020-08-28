@@ -1,6 +1,6 @@
 package kubernetes.validating.image
 
-deny[msg] {
+violation[{"msg": msg}] {
 	# We are only interested in Pods
 	input.review.kind.kind == "Pod"
 

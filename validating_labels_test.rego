@@ -3,7 +3,7 @@ package kubernetes.validating.labels
 test_bad_pod {
 	pod := {
 		"kind": "AdmissionReview",
-		"request": {
+		"review": {
 			"kind": {
 				"kind": "Pod",
 				"version": "v1",
@@ -28,7 +28,7 @@ test_bad_pod {
 test_good_pod {
 	pod := {
 		"kind": "AdmissionReview",
-		"request": {
+		"review": {
 			"kind": {
 				"kind": "Pod",
 				"version": "v1",

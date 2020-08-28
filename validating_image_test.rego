@@ -6,7 +6,7 @@ test_deny {
 
 pod := {
 	"kind": "AdmissionReview",
-	"request": {
+	"review": {
 		"kind": {
 			"kind": "Pod",
 			"version": "v1",

@@ -4,7 +4,7 @@ required := {"rekzi.io/bounded-context", "app.kubernetes.io/name"}
 
 deny[msg] {
 	# Check for Kubernetes Label
-	provided := {label | input.request.object.metadata.labels[label]}
+	provided := {label | input.review.object.metadata.labels[label]}
 
 	# Try to match all required labels
 	missing := required - provided

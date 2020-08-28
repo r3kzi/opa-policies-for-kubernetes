@@ -1,0 +1,42 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: requiredrequestsandlimits
+spec:
+  crd:
+    spec:
+      names:
+        kind: RequiredRequestsAndLimits
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package kubernetes.validating.resources
+
+        violation[{"msg": msg}] {
+          # Check limits
+          container := input.review.object.spec.containers[_]
+          not container.resources.limits
+
+          # If all above statements are true, return message
+          msg := sprintf("You must provide resources.limits for container: %v", [container.name])
+        }
+
+        violation[{"msg": msg}] {
+          # Check requests
+          container := input.review.object.spec.containers[_]
+          not container.resources.requests
+
+          # If all above statements are true, return message
+          msg := sprintf("You must provide resources.requests for container: %v", [container.name])
+        }
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: RequiredRequestsAndLimits
+metadata:
+  name: pods-must-have-requests-and-limits
+spec:
+  match:
+    excludedNamespaces: [ "kube-system", "gatekeeper-system" ]
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]

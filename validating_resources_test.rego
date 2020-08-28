@@ -1,16 +1,16 @@
 package kubernetes.validating.resources
 
 test_requests {
-	deny["You must provide resources.requests for container: only-limits"] with input as pod
+	violation[{"msg": "You must provide resources.requests for container: only-limits"}] with input as pod
 }
 
 test_limits {
-	deny["You must provide resources.limits for container: only-requests"] with input as pod
+	violation[{"msg": "You must provide resources.limits for container: only-requests"}] with input as pod
 }
 
 pod := {
 	"kind": "AdmissionReview",
-	"request": {
+	"review": {
 		"kind": {
 			"kind": "Pod",
 			"version": "v1",

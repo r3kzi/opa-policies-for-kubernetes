@@ -1,3 +1,4 @@
+---
 apiVersion: templates.gatekeeper.sh/v1beta1
 kind: ConstraintTemplate
 metadata:
@@ -36,7 +37,7 @@ metadata:
   name: pods-must-have-requests-and-limits
 spec:
   match:
-    excludedNamespaces: [ "kube-system", "gatekeeper-system" ]
+    excludedNamespaces: ["kube-system", "gatekeeper-system"]
     kinds:
       - apiGroups: [""]
         kinds: ["Pod"]
